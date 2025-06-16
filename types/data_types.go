@@ -58,19 +58,25 @@ var TypeWeights = map[DataType]int{
 type Record map[string]any
 
 type RawRecord struct {
-	Data           map[string]any `parquet:"data,json"`
+	Before         map[string]any `parquet:"before,json"`
+	After          map[string]any `parquet:"after,json"`
 	OlakeID        string         `parquet:"_olake_id"`
 	OlakeTimestamp time.Time      `parquet:"_olake_timestamp"`
 	OperationType  string         `parquet:"_op_type"` // "r" for read/backfill, "c" for create, "u" for update, "d" for delete
 	CdcTimestamp   time.Time      `parquet:"_cdc_timestamp"`
+	DB             string         `parquet:"db" json:"db"`        //数据库
+	Table          string         `parquet:"table"  json:"table"` //数据表
 }
 
-func CreateRawRecord(olakeID string, data map[string]any, operationType string, cdcTimestamp time.Time) RawRecord {
+func CreateRawRecord(olakeID string, before, after map[string]any, operationType string, cdcTimestamp time.Time, dbName, table string) RawRecord {
 	return RawRecord{
 		OlakeID:       olakeID,
-		Data:          data,
+		Before:        before,
+		After:         after,
 		OperationType: operationType,
 		CdcTimestamp:  cdcTimestamp,
+		DB:            dbName,
+		Table:         table,
 	}
 }
 
@@ -86,15 +92,15 @@ func (r *RawRecord) ToDebeziumFormat(db string, stream string, normalization boo
 
 	// Handle data based on normalization flag
 	if normalization {
-		for key, value := range r.Data {
+		for key, value := range r.After {
 			payload[key] = value
 		}
 	} else {
-		dataBytes, err := json.Marshal(r.Data)
+		dataBytes, err := json.Marshal(r.After)
 		if err != nil {
 			return "", err
 		}
-		payload["data"] = string(dataBytes)
+		payload["after"] = string(dataBytes)
 	}
 
 	// Add the metadata fields
@@ -148,10 +154,10 @@ func (r *RawRecord) createDebeziumSchema(db string, stream string, normalization
 
 	if normalization {
 		// Collect data fields for sorting
-		dataFields := make([]map[string]interface{}, 0, len(r.Data))
+		dataFields := make([]map[string]interface{}, 0, len(r.After))
 
 		// Add individual data fields
-		for key, value := range r.Data {
+		for key, value := range r.After {
 			field := map[string]interface{}{
 				"optional": true,
 				"field":    key,

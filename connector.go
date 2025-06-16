@@ -3,7 +3,9 @@ package olake
 import (
 	"os"
 
+	_ "github.com/datazip-inc/olake/destination/amqp"
 	_ "github.com/datazip-inc/olake/destination/iceberg" // registering iceberg destination
+	_ "github.com/datazip-inc/olake/destination/kakfa"
 	_ "github.com/datazip-inc/olake/destination/parquet" // registering parquet destination
 	"github.com/datazip-inc/olake/drivers/abstract"
 	protocol "github.com/datazip-inc/olake/protocol"

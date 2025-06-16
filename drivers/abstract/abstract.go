@@ -16,7 +16,8 @@ type CDCChange struct {
 	Stream    types.StreamInterface
 	Timestamp typeutils.Time
 	Kind      string
-	Data      map[string]interface{}
+	Before    map[string]interface{}
+	After     map[string]interface{}
 }
 
 type AbstractDriver struct { //nolint:gosec,revive

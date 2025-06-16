@@ -120,7 +120,7 @@ func (w *WriterPool) NewThread(parent context.Context, stream types.StreamInterf
 	}
 
 	normalizeFunc := func(rawRecord types.RawRecord) (types.Record, error) {
-		flattenedData, err := thread.Flattener()(rawRecord.Data) // flatten the record first
+		flattenedData, err := thread.Flattener()(rawRecord.After) // flatten the record first
 		if err != nil {
 			return nil, err
 		}
@@ -190,7 +190,7 @@ func (w *WriterPool) NewThread(parent context.Context, stream types.StreamInterf
 					if err != nil {
 						return fmt.Errorf("failed to normalize record: %s", err)
 					}
-					record.Data = normalizedData
+					record.After = normalizedData
 				}
 				// insert record
 				if err := thread.Write(child, record); err != nil {

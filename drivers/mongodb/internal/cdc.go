@@ -18,11 +18,12 @@ import (
 )
 
 type CDCDocument struct {
-	OperationType string              `json:"operationType"`
-	FullDocument  map[string]any      `json:"fullDocument"`
-	ClusterTime   primitive.Timestamp `json:"clusterTime"`
-	WallTime      primitive.DateTime  `json:"wallTime"`
-	DocumentKey   map[string]any      `json:"documentKey"`
+	OperationType            string              `json:"operationType"`
+	FullDocument             map[string]any      `json:"fullDocument"`
+	ClusterTime              primitive.Timestamp `json:"clusterTime"`
+	WallTime                 primitive.DateTime  `json:"wallTime"`
+	DocumentKey              map[string]any      `json:"documentKey"`
+	FullDocumentBeforeChange map[string]any      `json:"fullDocumentBeforeChange"`
 }
 
 func (m *Mongo) PreCDC(cdcCtx context.Context, streams []types.StreamInterface) error {
@@ -66,13 +67,17 @@ func (m *Mongo) StreamChanges(ctx context.Context, stream types.StreamInterface,
 	changeStreamOpts = changeStreamOpts.SetResumeAfter(map[string]any{cdcCursorField: resumeToken})
 	logger.Infof("Starting CDC sync for stream[%s] with resume token[%s]", stream.ID(), resumeToken)
 
-	cursor, err := collection.Watch(ctx, pipeline, changeStreamOpts)
+	changeStreamOptions := options.ChangeStream().
+		SetFullDocument(options.UpdateLookup).
+		SetFullDocumentBeforeChange(options.WhenAvailable)
+
+	cursor, err := collection.Watch(ctx, pipeline, changeStreamOpts, changeStreamOptions)
 	if err != nil {
 		return fmt.Errorf("failed to open change stream: %s", err)
 	}
 	defer cursor.Close(ctx)
 
-	for cursor.TryNext(ctx) {
+	for cursor.Next(ctx) {
 		var record CDCDocument
 		if err := cursor.Decode(&record); err != nil {
 			return fmt.Errorf("error while decoding: %s", err)
@@ -90,7 +95,8 @@ func (m *Mongo) StreamChanges(ctx context.Context, stream types.StreamInterface,
 		change := abstract.CDCChange{
 			Stream:    stream,
 			Timestamp: typeutils.Time{Time: ts},
-			Data:      record.FullDocument,
+			Before:    record.FullDocumentBeforeChange,
+			After:     record.FullDocument,
 			Kind:      record.OperationType,
 		}
 		m.cdcCursor.Store(stream.ID(), cursor.ResumeToken().Lookup(cdcCursorField).StringValue())

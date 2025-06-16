@@ -59,7 +59,9 @@ func (a *AbstractDriver) Backfill(ctx context.Context, backfilledStreams chan st
 		return RetryOnBackoff(a.driver.MaxRetries(), constants.DefaultRetryTimeout, func() error {
 			return a.driver.ChunkIterator(ctx, stream, chunk, func(data map[string]any) error {
 				olakeID := utils.GetKeysHash(data, stream.GetStream().SourceDefinedPrimaryKey.Array()...)
-				return inserter.Insert(types.CreateRawRecord(olakeID, data, "r", time.Unix(0, 0)))
+				dbName := stream.Namespace()
+				tableName := stream.Name()
+				return inserter.Insert(types.CreateRawRecord(olakeID, nil, data, "r", time.Unix(0, 0), dbName, tableName))
 			})
 		})
 	}

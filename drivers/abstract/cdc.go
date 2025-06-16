@@ -73,11 +73,16 @@ func (a *AbstractDriver) RunChangeStream(ctx context.Context, pool *destination.
 						return a.driver.StreamChanges(ctx, streams[index], func(change CDCChange) error {
 							pkFields := change.Stream.GetStream().SourceDefinedPrimaryKey.Array()
 							opType := utils.Ternary(change.Kind == "delete", "d", utils.Ternary(change.Kind == "update", "u", "c")).(string)
+							dbName := change.Stream.Namespace()
+							tableName := change.Stream.Name()
 							return inserter.Insert(types.CreateRawRecord(
-								utils.GetKeysHash(change.Data, pkFields...),
-								change.Data,
+								utils.GetKeysHash(change.After, pkFields...),
+								change.Before,
+								change.After,
 								opType,
 								change.Timestamp.Time,
+								dbName,
+								tableName,
 							))
 						})
 					})
@@ -120,13 +125,19 @@ func (a *AbstractDriver) RunChangeStream(ctx context.Context, pool *destination.
 			return a.driver.StreamChanges(ctx, nil, func(change CDCChange) error {
 				pkFields := change.Stream.GetStream().SourceDefinedPrimaryKey.Array()
 				opType := utils.Ternary(change.Kind == "delete", "d", utils.Ternary(change.Kind == "update", "u", "c")).(string)
+				dbName := change.Stream.Namespace()
+				tableName := change.Stream.Name()
 				return inserters[change.Stream].Insert(types.CreateRawRecord(
-					utils.GetKeysHash(change.Data, pkFields...),
-					change.Data,
+					utils.GetKeysHash(change.After, pkFields...),
+					change.Before,
+					change.After,
 					opType,
 					change.Timestamp.Time,
+					dbName,
+					tableName,
 				))
 			})
+
 		})
 	})
 	return nil

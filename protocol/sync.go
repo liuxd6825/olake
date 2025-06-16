@@ -103,13 +103,13 @@ var syncCmd = &cobra.Command{
 
 			source, found := streamsMap[elem.ID()]
 			if !found {
-				logger.Warnf("Skipping; Configured Stream %s not found in source", elem.ID())
+				logger.Errorf("Skipping; Configured Stream %s not found in source", elem.ID())
 				return false
 			}
 
 			err := elem.Validate(source)
 			if err != nil {
-				logger.Warnf("Skipping; Configured Stream %s found invalid due to reason: %s", elem.ID(), err)
+				logger.Errorf("Skipping; Configured Stream %s found invalid due to reason: %s", elem.ID(), err)
 				return false
 			}
 
