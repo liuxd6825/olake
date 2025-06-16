@@ -1,0 +1,12 @@
+{
+  "type": "AMQP",
+  "writer": {
+    "url": "amqp://rabbitmq:rabbitmq_15672@127.0.0.1:5672",
+    "topic": "cdc",
+    "exchangeName": "cdc",
+    "exchangeType": "fanout",
+    "queueName": "cdc",
+    "normalization": false,
+    "autoCreate": true
+  }
+}

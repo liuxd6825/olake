@@ -1,6 +1,9 @@
 olake
 .vscode
-test
+state.json
+stats.json
+*.log
+test/config
 .DS_Store
 __debug_bin*
 go.sum

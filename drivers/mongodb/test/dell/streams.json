@@ -1,0 +1,1705 @@
+{
+  "selected_streams": {
+    "master": [
+      {
+        "partition_regex": "",
+        "stream_name": "human_credential",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_capital",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_ext",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_account",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_record",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_suspect_amount",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "contract_record",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "contract",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_address",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_human",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "company_contract",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_link",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "contract_company",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "company_product",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "contract_human",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "contract_product",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_reported_amount",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "company_human",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "contract_contract",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "company_record",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_company",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_product",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "company_company",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "company",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_contract",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "sys_outbox",
+        "normalization": false
+      }
+    ]
+  },
+  "streams": [
+    {
+      "stream": {
+        "name": "human_credential",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_capital",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "null",
+                "integer"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "cdc",
+          "full_refresh"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_ext",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_account",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_record",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_suspect_amount",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "null",
+                "integer"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "contract_record",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "contract",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_address",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_human",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "company_contract",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "null",
+                "integer"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_link",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "null",
+                "integer"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "contract_company",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "company_product",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "rag_chat",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "case_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "created_time": {
+              "type": [
+                "timestamp_milli"
+              ]
+            },
+            "creator_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "creator_name": {
+              "type": [
+                "string"
+              ]
+            },
+            "id": {
+              "type": [
+                "string"
+              ]
+            },
+            "remark": {
+              "type": [
+                "string"
+              ]
+            },
+            "tenant_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "title": {
+              "type": [
+                "string"
+              ]
+            },
+            "updated_time": {
+              "type": [
+                "timestamp_milli"
+              ]
+            },
+            "updater_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "updater_name": {
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "contract_human",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "rag_message",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "null",
+                "integer"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "null",
+                "integer"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "cdc",
+          "full_refresh"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "contract_product",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_reported_amount",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "cdc",
+          "full_refresh"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "company_human",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "addr": {
+              "type": [
+                "null"
+              ]
+            },
+            "age": {
+              "type": [
+                "null"
+              ]
+            },
+            "case_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "company_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "created_time": {
+              "type": [
+                "timestamp_milli"
+              ]
+            },
+            "creator_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "creator_name": {
+              "type": [
+                "string"
+              ]
+            },
+            "gender": {
+              "type": [
+                "null"
+              ]
+            },
+            "ident_num": {
+              "type": [
+                "null"
+              ]
+            },
+            "link": {
+              "type": [
+                "null"
+              ]
+            },
+            "name": {
+              "type": [
+                "string"
+              ]
+            },
+            "relation_type": {
+              "type": [
+                "string"
+              ]
+            },
+            "remark": {
+              "type": [
+                "null"
+              ]
+            },
+            "tenant_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "updated_time": {
+              "type": [
+                "timestamp_milli"
+              ]
+            },
+            "updater_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "updater_name": {
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "contract_contract",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "company_record",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_company",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "null",
+                "integer"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_product",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "company_company",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "company",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "addr": {
+              "type": [
+                "string"
+              ]
+            },
+            "addr_type": {
+              "type": [
+                "string"
+              ]
+            },
+            "approval_date": {
+              "type": [
+                "null"
+              ]
+            },
+            "business_term": {
+              "type": [
+                "string"
+              ]
+            },
+            "case_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "create_date": {
+              "type": [
+                "null"
+              ]
+            },
+            "created_time": {
+              "type": [
+                "timestamp_milli"
+              ]
+            },
+            "creator_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "creator_name": {
+              "type": [
+                "string"
+              ]
+            },
+            "credit_code": {
+              "type": [
+                "string"
+              ]
+            },
+            "eng_name": {
+              "type": [
+                "string"
+              ]
+            },
+            "ent_type": {
+              "type": [
+                "string"
+              ]
+            },
+            "identification": {
+              "type": [
+                "string"
+              ]
+            },
+            "industry": {
+              "type": [
+                "string"
+              ]
+            },
+            "insured_persons": {
+              "type": [
+                "string"
+              ]
+            },
+            "name": {
+              "type": [
+                "string"
+              ]
+            },
+            "name_used": {
+              "type": [
+                "string"
+              ]
+            },
+            "nature_of_business": {
+              "type": [
+                "string"
+              ]
+            },
+            "operating_status": {
+              "type": [
+                "string"
+              ]
+            },
+            "org_code": {
+              "type": [
+                "string"
+              ]
+            },
+            "paid_in_capital": {
+              "type": [
+                "string"
+              ]
+            },
+            "personnel_size": {
+              "type": [
+                "null"
+              ]
+            },
+            "qualification": {
+              "type": [
+                "string"
+              ]
+            },
+            "reg_authority": {
+              "type": [
+                "string"
+              ]
+            },
+            "reg_capital": {
+              "type": [
+                "string"
+              ]
+            },
+            "reg_capital_type": {
+              "type": [
+                "string"
+              ]
+            },
+            "reg_no": {
+              "type": [
+                "string"
+              ]
+            },
+            "remark": {
+              "type": [
+                "string"
+              ]
+            },
+            "tenant_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "updated_time": {
+              "type": [
+                "timestamp_milli"
+              ]
+            },
+            "updater_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "updater_name": {
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_contract",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "sys_outbox",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    }
+  ]
+}

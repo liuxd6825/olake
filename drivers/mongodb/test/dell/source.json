@@ -1,0 +1,20 @@
+{
+  "hosts": [
+    "192.168.120.224:27018",
+    "192.168.120.224:27019",
+    "192.168.120.224:27020"
+  ],
+  "username": "super_admin",
+  "password": "123456",
+  "authdb": "admin",
+  "auth_mechanism": "SCRAM-SHA-256",
+  "read_preference": "secondaryPreferred",
+  "srv": false,
+  "server_ram": 16,
+  "database": "master",
+  "replicaSet": "mongors",
+  "max_threads": 50,
+  "default_mode": "cdc",
+  "backoff_retry_count": 4,
+  "chunking_strategy": ""
+}
