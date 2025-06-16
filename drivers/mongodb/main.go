@@ -10,7 +10,7 @@ import (
 
 func main() {
 	driver := &driver.Mongo{
-		CDCSupport: false,
+		CDCSupport: true,
 	}
 	defer driver.Close(context.Background())
 	olake.RegisterDriver(driver)
