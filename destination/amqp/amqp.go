@@ -54,7 +54,25 @@ func (m *AmqpWriter) initMQ() (err error) {
 	}
 	m.conn = conn
 	m.channel = ch
-	return m.autoCreate()
+
+	if err := m.autoCreate(); err != nil {
+		return err
+	}
+
+	// 5. 将 Queue 绑定到 Exchange
+	err = ch.QueueBind(
+		m.config.QueueName,    // 队列名称
+		m.config.RoutingKey,   // 路由键
+		m.config.ExchangeName, // 交换机名称
+		m.config.NoWait,       // 是否等待确认
+		amqp091.Table{
+			"x-message-ttl": int32(6000),
+		}, // 额外参数
+	)
+	if err != nil {
+		return errors.New(fmt.Sprintf("无法绑定 Queue 到 Exchange: %s", err))
+	}
+	return nil
 }
 
 func (m *AmqpWriter) autoCreate() (err error) {
@@ -66,40 +84,49 @@ func (m *AmqpWriter) autoCreate() (err error) {
 	err = ch.ExchangeDeclare(
 		m.config.ExchangeName, // 交换机名称
 		m.config.ExchangeType, // 类型，direct 是最常见的一种类型
-		true,                  // 是否持久化
-		false,                 // 是否自动删除
-		false,                 // 是否内建
-		false,                 // 是否等待确认
-		nil,                   // 额外参数
+		m.config.Durable,      // 是否持久化
+		m.config.AutoDelete,   // 是否自动删除
+		m.config.Exclusive,    // 是否排他
+		m.config.NoWait,       // 是否等待确认
+		amqp091.Table{
+			"x-message-ttl": int32(6000),
+		}, // 额外参数
 	)
 	if err != nil {
 		return errors.New(fmt.Sprintf("无法声明 Exchange: %s", err))
 	}
+	hasQueue := true
+	_, err = ch.QueueDeclarePassive(m.config.QueueName, true, false, false, false, nil)
+	if err != nil {
+		if amqpErr, ok := err.(*amqp091.Error); ok {
+			if amqpErr.Code == 404 { // 404 是 "NOT_FOUND" 错误码
+				hasQueue = false
+			} else {
+				return err
+			}
+		} else {
+			return err
+		}
+	}
+	if hasQueue {
+		return nil
+	}
 
-	// 4. 声明一个 Queue
+	// 4. 声明一个
 	_, err = ch.QueueDeclare(
-		m.config.QueueName, // 队列名称
-		true,               // 是否持久化
-		false,              // 是否自动删除
-		false,              // 是否排他
-		false,              // 是否等待确认
-		nil,                // 额外参数
+		m.config.QueueName,  // 队列名称
+		m.config.Durable,    // 是否持久化
+		m.config.AutoDelete, // 是否自动删除
+		m.config.Exclusive,  // 是否排他
+		m.config.NoWait,     // 是否等待确认
+		amqp091.Table{
+			"x-message-ttl": int32(6000),
+		}, // 额外参数
 	)
 	if err != nil {
 		return errors.New(fmt.Sprintf("无法声明 Queue: %s", err))
 	}
 
-	// 5. 将 Queue 绑定到 Exchange
-	err = ch.QueueBind(
-		m.config.QueueName,    // 队列名称
-		m.config.RoutingKey,   // 路由键
-		m.config.ExchangeName, // 交换机名称
-		false,                 // 是否等待确认
-		nil,                   // 额外参数
-	)
-	if err != nil {
-		return errors.New(fmt.Sprintf("无法绑定 Queue 到 Exchange: %s", err))
-	}
 	return nil
 }
 

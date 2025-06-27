@@ -13,6 +13,10 @@ type Config struct {
 	ExchangeName  string `json:"exchangeName,omitempty"`
 	ExchangeType  string `json:"exchangeType,omitempty"`
 	QueueName     string `json:"queueName,omitempty"`
+	NoWait        bool   `json:"noWait,omitempty"`
+	Durable       bool   `json:"durable,omitempty"`
+	Exclusive     bool   `json:"exclusive,omitempty"`
+	AutoDelete    bool   `json:"autoDelete,omitempty"`
 }
 
 func (c *Config) Validate() error {

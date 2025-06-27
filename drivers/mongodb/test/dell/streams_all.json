@@ -1,7 +1,6 @@
 {
   "selected_streams": {
     "master": [
-
       {
         "partition_regex": "",
         "stream_name": "company",
@@ -9,7 +8,52 @@
       },
       {
         "partition_regex": "",
-        "stream_name": "company_human",
+        "stream_name": "contract",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "contract_product",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "contract_human",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "company_contract",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_link",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "rag_document",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "doc_document",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "contract_company",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_company",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "sys_outbox",
         "normalization": false
       },
       {
@@ -19,7 +63,87 @@
       },
       {
         "partition_regex": "",
+        "stream_name": "contract_contract",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_credential",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_capital",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_record",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_ext",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "contract_record",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_address",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_human",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
         "stream_name": "company_record",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_account",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "company_product",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "doc_file",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "draw",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "doc_folder",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "rag_message",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "rag_chat",
         "normalization": false
       }
     ]
