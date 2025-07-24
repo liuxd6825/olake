@@ -58,12 +58,12 @@ var TypeWeights = map[DataType]int{
 type Record map[string]any
 
 type RawRecord struct {
-	Before         map[string]any `parquet:"before,json"`
-	After          map[string]any `parquet:"after,json"`
-	OlakeID        string         `parquet:"_olake_id"`
-	OlakeTimestamp time.Time      `parquet:"_olake_timestamp"`
-	OperationType  string         `parquet:"_op_type"` // "r" for read/backfill, "c" for create, "u" for update, "d" for delete
-	CdcTimestamp   time.Time      `parquet:"_cdc_timestamp"`
+	Before         map[string]any `parquet:"before,json" json:"before,omitempty"`
+	After          map[string]any `parquet:"after,json" json:"after,omitempty"`
+	OlakeID        string         `parquet:"_olake_id" json:"olakeId,omitempty"`
+	OlakeTimestamp time.Time      `parquet:"_olake_timestamp" json:"olakeTimestamp"`
+	OperationType  string         `parquet:"_op_type" json:"opType" ` // "r" for read/backfill, "c" for create, "u" for update, "d" for delete
+	CdcTimestamp   time.Time      `parquet:"_cdc_timestamp" json:"cdcTimestamp"`
 	DB             string         `parquet:"db" json:"db"`        //数据库
 	Table          string         `parquet:"table"  json:"table"` //数据表
 }

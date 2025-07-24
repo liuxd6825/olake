@@ -2,6 +2,7 @@ package driver
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"math"
 	"strings"
@@ -77,7 +78,12 @@ func (m *Mongo) splitChunks(ctx context.Context, collection *mongo.Collection, s
 			if err == mongo.ErrNoDocuments {
 				return primitive.NilObjectID, nil
 			}
-			return doc["_id"].(primitive.ObjectID), err
+			idVal := doc["_id"]
+			id, ok := idVal.(primitive.ObjectID)
+			if !ok {
+				return primitive.NilObjectID, errors.New(fmt.Sprintf("expected _id to be primitive.ObjectID, got %v in collection %s", idVal, collection.Name()))
+			}
+			return id, nil
 		}
 
 		minID, err := getID(1)

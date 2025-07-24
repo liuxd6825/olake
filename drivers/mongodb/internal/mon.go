@@ -96,8 +96,8 @@ func (m *Mongo) MaxRetries() int {
 
 func (m *Mongo) GetStreamNames(ctx context.Context) ([]string, error) {
 	logger.Infof("Starting discover for MongoDB database %s", m.config.Database)
-	database := m.client.Database(m.config.Database)
-	collections, err := database.ListCollections(ctx, bson.M{})
+	db := m.client.Database(m.config.Database)
+	collections, err := db.ListCollections(ctx, bson.M{})
 	if err != nil {
 		return nil, err
 	}
@@ -109,14 +109,73 @@ func (m *Mongo) GetStreamNames(ctx context.Context) ([]string, error) {
 		if err := collections.Decode(&collectionInfo); err != nil {
 			return nil, fmt.Errorf("failed to decode collection: %s", err)
 		}
-
 		// Skip if collection is a view
 		if collectionType, ok := collectionInfo["type"].(string); ok && collectionType == "view" {
 			continue
 		}
-		streamNames = append(streamNames, collectionInfo["name"].(string))
+		collName := collectionInfo["name"].(string)
+		streamNames = append(streamNames, collName)
 	}
+	m.autoSetting(db, streamNames)
 	return streamNames, collections.Err()
+}
+
+func (m *Mongo) autoSetting(db *mongo.Database, collNames []string) {
+	if !m.config.AutoSetting {
+		return
+	}
+	for _, collName := range collNames {
+		if enabled, err := m.getPreImagesEnabled(db, collName); err != nil {
+			panic(err)
+		} else if !enabled {
+			if err = m.setPreImagesEnabled(db, collName, true); err != nil {
+				panic(err)
+			}
+		}
+	}
+}
+
+func (m *Mongo) setPreImagesEnabled(db *mongo.Database, collName string, enabled bool) error {
+	cmd := bson.D{
+		{"collMod", collName},
+		{"changeStreamPreAndPostImages", bson.D{{"enabled", enabled}}},
+	}
+	var result bson.M
+	err := db.RunCommand(context.TODO(), cmd).Decode(&result)
+	if err != nil {
+		return fmt.Errorf("failed to enable pre-images: %v", err)
+	}
+	return nil
+}
+
+func (m *Mongo) getPreImagesEnabled(db *mongo.Database, collectionName string) (bool, error) {
+	cmd := bson.D{
+		{"listCollections", 1},
+		{"filter", bson.D{{"name", collectionName}}},
+	}
+
+	var result struct {
+		Cursor struct {
+			FirstBatch []struct {
+				Options struct {
+					ChangeStreamPreAndPostImages struct {
+						Enabled bool `bson:"enabled"`
+					} `bson:"changeStreamPreAndPostImages"`
+				} `bson:"options"`
+			} `bson:"firstBatch"`
+		} `bson:"cursor"`
+	}
+
+	err := db.RunCommand(context.TODO(), cmd).Decode(&result)
+	if err != nil {
+		return false, err
+	}
+
+	if len(result.Cursor.FirstBatch) == 0 {
+		return false, fmt.Errorf("collection not found")
+	}
+
+	return result.Cursor.FirstBatch[0].Options.ChangeStreamPreAndPostImages.Enabled, nil
 }
 
 func (m *Mongo) ProduceSchema(ctx context.Context, streamName string) (*types.Stream, error) {

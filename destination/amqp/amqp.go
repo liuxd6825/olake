@@ -10,20 +10,25 @@ import (
 	"github.com/datazip-inc/olake/utils/logger"
 	"github.com/datazip-inc/olake/utils/typeutils"
 	"github.com/rabbitmq/amqp091-go"
+	"math"
+	"sync"
 	"time"
 )
 
 type AmqpWriter struct {
-	config  *Config
-	conn    *amqp091.Connection
-	channel *amqp091.Channel
-	options *destination.Options
-	stream  types.StreamInterface
+	config    *Config
+	conn      *amqp091.Connection
+	channel   *amqp091.Channel
+	options   *destination.Options
+	stream    types.StreamInterface
+	mutex     sync.Mutex
+	closeChan chan struct{}
 }
 
 func NewAmqpWriter() destination.Writer {
 	return &AmqpWriter{
-		config: &Config{},
+		config:    &Config{},
+		closeChan: make(chan struct{}),
 	}
 }
 
@@ -44,33 +49,12 @@ func (m *AmqpWriter) Type() string {
 }
 
 func (m *AmqpWriter) initMQ() (err error) {
-	conn, err := amqp091.Dial(m.config.Url)
+	err = m.connect()
 	if err != nil {
 		return err
 	}
-	ch, err := conn.Channel()
-	if err != nil {
-		return err
-	}
-	m.conn = conn
-	m.channel = ch
-
 	if err := m.autoCreate(); err != nil {
 		return err
-	}
-
-	// 5. 将 Queue 绑定到 Exchange
-	err = ch.QueueBind(
-		m.config.QueueName,    // 队列名称
-		m.config.RoutingKey,   // 路由键
-		m.config.ExchangeName, // 交换机名称
-		m.config.NoWait,       // 是否等待确认
-		amqp091.Table{
-			"x-message-ttl": int32(6000),
-		}, // 额外参数
-	)
-	if err != nil {
-		return errors.New(fmt.Sprintf("无法绑定 Queue 到 Exchange: %s", err))
 	}
 	return nil
 }
@@ -80,6 +64,10 @@ func (m *AmqpWriter) autoCreate() (err error) {
 		return nil
 	}
 	ch := m.channel
+	if ch.IsClosed() {
+		return errors.New("无法声明 Queue: channel is closed")
+	}
+
 	// 3. 声明一个 Exchange
 	err = ch.ExchangeDeclare(
 		m.config.ExchangeName, // 交换机名称
@@ -89,7 +77,7 @@ func (m *AmqpWriter) autoCreate() (err error) {
 		m.config.Exclusive,    // 是否排他
 		m.config.NoWait,       // 是否等待确认
 		amqp091.Table{
-			"x-message-ttl": int32(6000),
+			//"x-message-ttl": int32(6000),
 		}, // 额外参数
 	)
 	if err != nil {
@@ -112,6 +100,13 @@ func (m *AmqpWriter) autoCreate() (err error) {
 		return nil
 	}
 
+	if ch.IsClosed() {
+		if err = m.reconnect(); err != nil {
+			return errors.New(fmt.Sprintf("无法声明 Queue: channel is closed %s", err.Error()))
+		}
+	}
+
+	ch = m.channel
 	// 4. 声明一个
 	_, err = ch.QueueDeclare(
 		m.config.QueueName,  // 队列名称
@@ -120,14 +115,82 @@ func (m *AmqpWriter) autoCreate() (err error) {
 		m.config.Exclusive,  // 是否排他
 		m.config.NoWait,     // 是否等待确认
 		amqp091.Table{
-			"x-message-ttl": int32(6000),
+			//"x-message-ttl": int32(6000),
 		}, // 额外参数
 	)
 	if err != nil {
 		return errors.New(fmt.Sprintf("无法声明 Queue: %s", err))
 	}
 
+	// 5. 将 Queue 绑定到 Exchange
+	err = ch.QueueBind(
+		m.config.QueueName,    // 队列名称
+		m.config.RoutingKey,   // 路由键
+		m.config.ExchangeName, // 交换机名称
+		m.config.NoWait,       // 是否等待确认
+		amqp091.Table{
+			//"x-message-ttl": int32(6000),
+		}, // 额外参数
+	)
+
 	return nil
+}
+
+func (m *AmqpWriter) connect() error {
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
+
+	// 关闭现有连接（如果存在）
+	if m.channel != nil {
+		_ = m.channel.Close()
+	}
+	if m.conn != nil {
+		_ = m.conn.Close()
+	}
+
+	// 建立新连接
+	conn, err := amqp091.Dial(m.config.Url)
+	if err != nil {
+		return fmt.Errorf("dial failed: %v", err)
+	}
+
+	ch, err := conn.Channel()
+	if err != nil {
+		_ = conn.Close()
+		return fmt.Errorf("channel create failed: %v", err)
+	}
+
+	m.conn = conn
+	m.channel = ch
+	return nil
+}
+
+func (m *AmqpWriter) reconnect() error {
+	// 最大重试次数和初始延迟
+	const maxRetries = 5
+	initialDelay := time.Second
+
+	var lastErr error
+
+	for i := 0; i < maxRetries; i++ {
+		if i > 0 {
+			// 指数退避
+			delay := initialDelay * time.Duration(math.Pow(2, float64(i-1)))
+			if delay > 30*time.Second {
+				delay = 30 * time.Second
+			}
+			time.Sleep(delay)
+		}
+
+		if err := m.connect(); err == nil {
+			return nil // 连接成功
+		} else {
+			lastErr = err
+			logger.Infof("Reconnect attempt %d failed: %v", i+1, err)
+		}
+	}
+
+	return fmt.Errorf("after %d reconnect attempts, last error: %v", maxRetries, lastErr)
 }
 
 func (m *AmqpWriter) Setup(stream types.StreamInterface, opts *destination.Options) error {

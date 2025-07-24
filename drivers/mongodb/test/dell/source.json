@@ -16,5 +16,6 @@
   "max_threads": 50,
   "default_mode": "cdc",
   "backoff_retry_count": 4,
-  "chunking_strategy": ""
+  "chunking_strategy": "",
+  "auto_setting": true
 }
