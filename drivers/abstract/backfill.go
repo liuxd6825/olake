@@ -61,7 +61,7 @@ func (a *AbstractDriver) Backfill(ctx context.Context, backfilledStreams chan st
 				olakeID := utils.GetKeysHash(data, stream.GetStream().SourceDefinedPrimaryKey.Array()...)
 				dbName := stream.Namespace()
 				tableName := stream.Name()
-				return inserter.Insert(types.CreateRawRecord(olakeID, nil, data, "r", time.Unix(0, 0), dbName, tableName))
+				return inserter.Insert(types.CreateRawRecord(stream, olakeID, nil, data, "r", time.Unix(0, 0), dbName, tableName))
 			})
 		})
 	}

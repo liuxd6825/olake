@@ -148,6 +148,9 @@ func (f Fields) ToProperties() map[string]*types.Property {
 }
 
 func (f Fields) FromSchema(schema *types.TypeSchema) {
+	if schema == nil {
+		return
+	}
 	schema.Properties.Range(func(key, value any) bool {
 		fieldName := key.(string)
 		property := value.(*types.Property)

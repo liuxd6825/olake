@@ -59,6 +59,23 @@ func (m *AmqpWriter) initMQ() (err error) {
 	return nil
 }
 
+type ExchangeType string
+
+/*
+Exchange
+类型使用哪种    key	           路由规则    	       消息分发方式  	         主要场景
+Direct	      routingKey	   精确匹配	           点对点 / 精准发放	     任务分发、明确消费者处理
+Fanout	      不使用	           广播至所有绑定队列	   广播广播广播	         通知、日志广播、配置下发
+Topic	      routingKey	   支持 *, # 模糊匹配	   有选择的多播	         系统日志、按模块分类、地理分组
+Headers	      message          headers	           多属性匹配（any/all）	 属性路由	多维属性过滤、复杂路由需求
+*/
+const (
+	Direct  ExchangeType = "direct"
+	Topic   ExchangeType = "topic"
+	Fanout  ExchangeType = "fanout"
+	Headers ExchangeType = "headers"
+)
+
 func (m *AmqpWriter) autoCreate() (err error) {
 	if !m.config.AutoCreate {
 		return nil
@@ -71,7 +88,7 @@ func (m *AmqpWriter) autoCreate() (err error) {
 	// 3. 声明一个 Exchange
 	err = ch.ExchangeDeclare(
 		m.config.ExchangeName, // 交换机名称
-		m.config.ExchangeType, // 类型，direct 是最常见的一种类型
+		m.config.ExchangeType, //  m.config.ExchangeType, // 类型，direct 是最常见的一种类型 , topic
 		m.config.Durable,      // 是否持久化
 		m.config.AutoDelete,   // 是否自动删除
 		m.config.Exclusive,    // 是否排他
@@ -199,17 +216,34 @@ func (m *AmqpWriter) Setup(stream types.StreamInterface, opts *destination.Optio
 	return nil
 }
 
-func (m *AmqpWriter) Write(ctx context.Context, record types.RawRecord) error {
-	data, err := json.Marshal(record)
-	if err != nil {
-		return err
-	}
+func (m *AmqpWriter) Write(ctx context.Context, record types.RawRecord) (err error) {
 	logger.Infof("amqp db:%s; table:%s; operationType:%s, after:%v; before:%v", record.DB, record.Table, record.OperationType, record.After, record.Before)
+	var data []byte
+	var routingKey string
+
+	if dEvent, err := record.GetDomainEvent(); err != nil {
+		return err
+	} else if dEvent != nil {
+		data, err = json.Marshal(dEvent.Data)
+		if err != nil {
+			return err
+		}
+		routingKey = dEvent.EventType
+	} else {
+		data, err = json.Marshal(record)
+		if err != nil {
+			return err
+		}
+		routingKey = m.config.RoutingKey
+		if routingKey == "" {
+			routingKey = fmt.Sprintf("%s.%s", record.DB, record.Table)
+		}
+	}
 	msg := amqp091.Publishing{
 		ContentType: "text/plain",
 		Body:        data,
 	}
-	return m.channel.Publish(m.config.ExchangeName, m.config.RoutingKey, m.config.Mandatory, m.config.Immediate, msg)
+	return m.channel.Publish(m.config.ExchangeName, routingKey, m.config.Mandatory, m.config.Immediate, msg)
 }
 
 func (m *AmqpWriter) Normalization() bool {

@@ -1,0 +1,134 @@
+{
+  "selected_streams": {
+    "master": [
+      {
+        "partition_regex": "",
+        "stream_name": "company_human",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "company",
+        "normalization": false
+      }
+    ]
+  },
+  "streams": [
+    {
+      "stream": {
+        "name": "company_human",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "null",
+                "integer"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "id": {
+              "type": [
+                "string"
+              ]
+            },
+            "name": {
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "company",
+        "namespace": "master",
+        "type_schema": {
+          "properties": {
+            "_cdc_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_id": {
+              "type": [
+                "string"
+              ]
+            },
+            "_olake_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "_olake_timestamp": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "_op_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "id": {
+              "type": [
+                "string"
+              ]
+            },
+            "name": {
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    }
+  ]
+}

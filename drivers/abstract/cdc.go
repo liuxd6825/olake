@@ -76,6 +76,7 @@ func (a *AbstractDriver) RunChangeStream(ctx context.Context, pool *destination.
 							dbName := change.Stream.Namespace()
 							tableName := change.Stream.Name()
 							return inserter.Insert(types.CreateRawRecord(
+								change.Stream,
 								utils.GetKeysHash(change.After, pkFields...),
 								change.Before,
 								change.After,
@@ -128,6 +129,7 @@ func (a *AbstractDriver) RunChangeStream(ctx context.Context, pool *destination.
 				dbName := change.Stream.Namespace()
 				tableName := change.Stream.Name()
 				return inserters[change.Stream].Insert(types.CreateRawRecord(
+					change.Stream,
 					utils.GetKeysHash(change.After, pkFields...),
 					change.Before,
 					change.After,

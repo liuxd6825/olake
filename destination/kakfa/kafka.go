@@ -89,13 +89,30 @@ func (m *KafkaWriter) Setup(stream types.StreamInterface, opts *destination.Opti
 	return nil
 }
 
-func (m *KafkaWriter) Write(ctx context.Context, record types.RawRecord) error {
-	data, err := json.Marshal(record)
-	if err != nil {
+func (m *KafkaWriter) Write(ctx context.Context, record types.RawRecord) (err error) {
+	var data []byte
+	var topic string
+	if dEvent, err := record.GetDomainEvent(); err != nil {
 		return err
+	} else if dEvent != nil {
+		topic = dEvent.EventType
+		data, err = json.Marshal(dEvent.Data)
+		if err != nil {
+			return err
+		}
+	} else {
+		topic = m.config.Topic
+		if topic == "" {
+			topic = fmt.Sprintf("%s.%s", record.DB, record.Table)
+		}
+		data, err = json.Marshal(record)
+		if err != nil {
+			return err
+		}
 	}
+
 	msg := &sarama.ProducerMessage{
-		Topic: m.config.Topic,
+		Topic: topic,
 		Value: sarama.StringEncoder(data),
 	}
 	_, _, err = m.producer.SendMessage(msg)

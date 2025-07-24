@@ -26,8 +26,14 @@ type Stream struct {
 	// Input of JSON Schema from Client to be parsed by driver
 	AdditionalProperties string `json:"additional_properties,omitempty"`
 	// Renderable JSON Schema for additional properties supported by respective driver for individual stream
-	AdditionalPropertiesSchema schema.JSONSchema `json:"additional_properties_schema,omitempty"`
-	SyncMode                   SyncMode          `json:"sync_mode,omitempty"` // Mode being used for syncing data
+	AdditionalPropertiesSchema schema.JSONSchema  `json:"additional_properties_schema,omitempty"`
+	SyncMode                   SyncMode           `json:"sync_mode,omitempty"`    // Mode being used for syncing data
+	DomainEvent                *DomainEventFields `json:"domain_event,omitempty"` // Domain event
+}
+
+type DomainEventFields struct {
+	EventType string `json:"event_type"`
+	Data      string `json:"data"`
 }
 
 func NewStream(name, namespace string) *Stream {

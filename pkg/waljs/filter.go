@@ -78,7 +78,7 @@ func (c ChangeFilter) FilterChange(change []byte, OnFiltered abstract.CDCMsgFn) 
 			Stream:    stream,
 			Kind:      ch.Kind,
 			Timestamp: changes.Timestamp,
-			Data:      changesMap,
+			After:     changesMap,
 		}); err != nil {
 			return nil, rowsCount, fmt.Errorf("failed to write filtered change: %s", err)
 		}

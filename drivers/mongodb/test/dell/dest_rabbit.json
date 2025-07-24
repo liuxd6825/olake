@@ -3,9 +3,8 @@
   "writer": {
     "url": "amqp://rabbitmq:123456@192.168.120.224:5672",
     "exchangeName": "master-cdc-graph",
-    "exchangeType": "fanout",
+    "exchangeType": "topic",
     "queueName": "master-cdc-graph",
-    "topic": "cdc",
     "normalization": false,
     "autoCreate": true,
     "durable": true,
