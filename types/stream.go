@@ -32,8 +32,9 @@ type Stream struct {
 }
 
 type DomainEventFields struct {
-	EventType string `json:"event_type"`
-	Data      string `json:"data"`
+	EventType []string `json:"event_type"`
+	Data      string   `json:"data"`
+	Meta      string   `json:"meta"`
 }
 
 func NewStream(name, namespace string) *Stream {

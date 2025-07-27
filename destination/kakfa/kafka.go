@@ -96,7 +96,7 @@ func (m *KafkaWriter) Write(ctx context.Context, record types.RawRecord) (err er
 		return err
 	} else if dEvent != nil {
 		topic = dEvent.EventType
-		data, err = json.Marshal(dEvent.Data)
+		data, err = json.Marshal(record.After)
 		if err != nil {
 			return err
 		}

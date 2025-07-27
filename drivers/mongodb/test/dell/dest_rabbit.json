@@ -6,7 +6,7 @@
     "exchangeType": "topic",
     "queueName": "master-cdc-graph",
     "normalization": false,
-    "autoCreate": true,
+    "autoCreate": false,
     "durable": true,
     "noWait": true,
     "autoSetting": true

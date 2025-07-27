@@ -2,13 +2,7 @@
   "selected_streams": {
     "master": [
       {
-        "partition_regex": "",
-        "stream_name": "company_human",
-        "normalization": false
-      },
-      {
-        "partition_regex": "",
-        "stream_name": "company",
+        "stream_name": "sys_outbox_event",
         "normalization": false
       }
     ]
@@ -16,51 +10,8 @@
   "streams": [
     {
       "stream": {
-        "name": "company_human",
+        "name": "sys_outbox_event",
         "namespace": "master",
-        "type_schema": {
-          "properties": {
-            "_cdc_timestamp": {
-              "type": [
-                "integer",
-                "null"
-              ]
-            },
-            "_id": {
-              "type": [
-                "string"
-              ]
-            },
-            "_olake_id": {
-              "type": [
-                "string",
-                "null"
-              ]
-            },
-            "_olake_timestamp": {
-              "type": [
-                "null",
-                "integer"
-              ]
-            },
-            "_op_type": {
-              "type": [
-                "string",
-                "null"
-              ]
-            },
-            "id": {
-              "type": [
-                "string"
-              ]
-            },
-            "name": {
-              "type": [
-                "string"
-              ]
-            }
-          }
-        },
         "supported_sync_modes": [
           "full_refresh",
           "cdc"
@@ -68,66 +19,14 @@
         "source_defined_primary_key": [
           "_id"
         ],
+        "type_schema": {},
         "available_cursor_fields": [],
-        "sync_mode": "cdc"
-      }
-    },
-    {
-      "stream": {
-        "name": "company",
-        "namespace": "master",
-        "type_schema": {
-          "properties": {
-            "_cdc_timestamp": {
-              "type": [
-                "integer",
-                "null"
-              ]
-            },
-            "_id": {
-              "type": [
-                "string"
-              ]
-            },
-            "_olake_id": {
-              "type": [
-                "string",
-                "null"
-              ]
-            },
-            "_olake_timestamp": {
-              "type": [
-                "integer",
-                "null"
-              ]
-            },
-            "_op_type": {
-              "type": [
-                "string",
-                "null"
-              ]
-            },
-            "id": {
-              "type": [
-                "string"
-              ]
-            },
-            "name": {
-              "type": [
-                "string"
-              ]
-            }
-          }
-        },
-        "supported_sync_modes": [
-          "full_refresh",
-          "cdc"
-        ],
-        "source_defined_primary_key": [
-          "_id"
-        ],
-        "available_cursor_fields": [],
-        "sync_mode": "cdc"
+        "sync_mode": "cdc",
+        "domain_event": {
+          "event_type": ["topic"],
+          "data": "data",
+          "meta": "meta"
+        }
       }
     }
   ]

@@ -23,7 +23,7 @@
         "available_cursor_fields": [],
         "sync_mode": "cdc",
         "domain_event": {
-          "event_type": "topic",
+          "event_type": ["topic"],
           "data": "data"
         }
       }

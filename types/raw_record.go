@@ -190,30 +190,41 @@ func (r *RawRecord) createDebeziumSchema(db string, stream string, normalization
 
 type DomainEvent struct {
 	EventType string
-	Data      any
+	//Data      any
+	//Meta      any
 }
 
 func (r *RawRecord) GetDomainEvent() (domainEvent *DomainEvent, err error) {
 	if r.Schema != nil && r.Schema.GetStream() != nil {
 		cfg := r.Schema.GetStream().DomainEvent
 		if cfg != nil {
-			if cfg.EventType == "" {
-				return nil, errors.New("event_type_field is not set")
+			if cfg.EventType == nil || len(cfg.EventType) == 0 {
+				return nil, errors.New("event_type  is not set")
 			}
-			if cfg.Data == "" {
-				return nil, errors.New("data_field is not set")
-			}
-			eventType, err := getMapString(r.After, cfg.EventType)
+			/*
+				if cfg.Data == "" {
+					return nil, errors.New("data  is not set")
+				}
+				if cfg.Meta == "" {
+					return nil, errors.New("meta  is not set")
+				}*/
+			eventType, err := getArrayString(r.After, cfg.EventType)
 			if err != nil {
 				return nil, err
 			}
-			data, err := getMapAny(r.After, cfg.Data)
-			if err != nil {
-				return nil, err
-			}
+			/*
+				data, err := getAny(r.After, cfg.Data)
+				if err != nil {
+					return nil, err
+				}
+				meta, err := getAny(r.After, cfg.Meta)
+				if err != nil {
+					return nil, err
+				}*/
 			domainEvent = &DomainEvent{
 				EventType: eventType,
-				Data:      data,
+				//Data:      data,
+				//Meta:      meta,
 			}
 			return domainEvent, nil
 		}
@@ -221,18 +232,27 @@ func (r *RawRecord) GetDomainEvent() (domainEvent *DomainEvent, err error) {
 	return nil, nil
 }
 
-func getMapString(m map[string]any, key string) (string, error) {
-	if val, ok := m[key]; ok {
-		if str, ok := val.(string); ok {
-			return str, nil
+func getArrayString(m map[string]any, keys []string) (string, error) {
+	var res string
+	for _, key := range keys {
+		if val, ok := m[key]; ok {
+			if str, ok := val.(string); ok {
+				if res == "" {
+					res = str
+				} else {
+					res = res + "." + str
+				}
+			} else {
+				return "", errors.New(fmt.Sprintf("field %s is not string", key))
+			}
 		} else {
-			return fmt.Sprintf("%v", val), nil
+			return "", errors.New(fmt.Sprintf("field %s not found", key))
 		}
 	}
-	return "", errors.New("key not found")
+	return res, nil
 }
 
-func getMapAny(m map[string]any, key string) (any, error) {
+func getAny(m map[string]any, key string) (any, error) {
 	if val, ok := m[key]; ok {
 		return val, nil
 	}

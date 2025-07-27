@@ -217,14 +217,17 @@ func (m *AmqpWriter) Setup(stream types.StreamInterface, opts *destination.Optio
 }
 
 func (m *AmqpWriter) Write(ctx context.Context, record types.RawRecord) (err error) {
-	logger.Infof("amqp db:%s; table:%s; operationType:%s, after:%v; before:%v", record.DB, record.Table, record.OperationType, record.After, record.Before)
+	logger.Infof("amqp db:%s; table:%s; operationType:%s", record.DB, record.Table, record.OperationType)
 	var data []byte
 	var routingKey string
 
 	if dEvent, err := record.GetDomainEvent(); err != nil {
 		return err
 	} else if dEvent != nil {
-		data, err = json.Marshal(dEvent.Data)
+		/*if record.OperationType != "c" {
+			return nil
+		}*/
+		data, err = json.Marshal(record.After)
 		if err != nil {
 			return err
 		}
