@@ -194,40 +194,32 @@ type DomainEvent struct {
 	//Meta      any
 }
 
-func (r *RawRecord) GetDomainEvent() (domainEvent *DomainEvent, err error) {
+func (r *RawRecord) IsDomainEvent() bool {
 	if r.Schema != nil && r.Schema.GetStream() != nil {
 		cfg := r.Schema.GetStream().DomainEvent
-		if cfg != nil {
-			if cfg.EventType == nil || len(cfg.EventType) == 0 {
-				return nil, errors.New("event_type  is not set")
-			}
-			/*
-				if cfg.Data == "" {
-					return nil, errors.New("data  is not set")
-				}
-				if cfg.Meta == "" {
-					return nil, errors.New("meta  is not set")
-				}*/
-			eventType, err := getArrayString(r.After, cfg.EventType)
-			if err != nil {
-				return nil, err
-			}
-			/*
-				data, err := getAny(r.After, cfg.Data)
-				if err != nil {
-					return nil, err
-				}
-				meta, err := getAny(r.After, cfg.Meta)
-				if err != nil {
-					return nil, err
-				}*/
-			domainEvent = &DomainEvent{
-				EventType: eventType,
-				//Data:      data,
-				//Meta:      meta,
-			}
-			return domainEvent, nil
+		if cfg != nil && cfg.EventType != nil && len(cfg.EventType) > 0 && r.OperationType != "d" {
+			return true
 		}
+	}
+	return false
+}
+
+func (r *RawRecord) IsSendEvent() bool {
+	return r.OperationType != "d"
+}
+
+func (r *RawRecord) GetDomainEvent() (domainEvent *DomainEvent, err error) {
+	if r.IsDomainEvent() {
+		cfg := r.Schema.GetStream().DomainEvent
+		eventType, err := getArrayString(r.After, cfg.EventType)
+		if err != nil {
+			return nil, err
+		}
+		domainEvent = &DomainEvent{
+			EventType: eventType,
+		}
+		return domainEvent, nil
+
 	}
 	return nil, nil
 }

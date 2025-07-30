@@ -221,12 +221,13 @@ func (m *AmqpWriter) Write(ctx context.Context, record types.RawRecord) (err err
 	var data []byte
 	var routingKey string
 
+	if record.IsDomainEvent() && !record.IsSendEvent() {
+		return nil
+	}
+
 	if dEvent, err := record.GetDomainEvent(); err != nil {
 		return err
 	} else if dEvent != nil {
-		/*if record.OperationType != "c" {
-			return nil
-		}*/
 		data, err = json.Marshal(record.After)
 		if err != nil {
 			return err

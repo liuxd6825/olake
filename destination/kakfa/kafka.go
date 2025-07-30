@@ -92,9 +92,16 @@ func (m *KafkaWriter) Setup(stream types.StreamInterface, opts *destination.Opti
 func (m *KafkaWriter) Write(ctx context.Context, record types.RawRecord) (err error) {
 	var data []byte
 	var topic string
+	if record.IsDomainEvent() && record.IsSendEvent() {
+		return nil
+	}
+	
 	if dEvent, err := record.GetDomainEvent(); err != nil {
 		return err
 	} else if dEvent != nil {
+		if record.OperationType == "d" {
+			return nil
+		}
 		topic = dEvent.EventType
 		data, err = json.Marshal(record.After)
 		if err != nil {
