@@ -1,0 +1,10 @@
+{
+  "type": "KAFKA",
+  "writer": {
+    "address": ["localhost:9092"],
+    "topic": "cdc",
+    "normalization": false,
+    "autoCreate": false
+  }
+}
+

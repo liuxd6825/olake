@@ -5,11 +5,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"time"
+
 	"github.com/IBM/sarama"
 	"github.com/datazip-inc/olake/destination"
 	"github.com/datazip-inc/olake/types"
 	"github.com/datazip-inc/olake/utils/typeutils"
-	"time"
 )
 
 type KafkaWriter struct {
@@ -95,7 +96,7 @@ func (m *KafkaWriter) Write(ctx context.Context, record types.RawRecord) (err er
 	if record.IsDomainEvent() && record.IsSendEvent() {
 		return nil
 	}
-	
+
 	if dEvent, err := record.GetDomainEvent(); err != nil {
 		return err
 	} else if dEvent != nil {
@@ -109,6 +110,9 @@ func (m *KafkaWriter) Write(ctx context.Context, record types.RawRecord) (err er
 		}
 	} else {
 		topic = m.config.Topic
+		if m.stream.GetStream().RouteKey != "" {
+			topic = m.stream.GetStream().RouteKey
+		}
 		if topic == "" {
 			topic = fmt.Sprintf("%s.%s", record.DB, record.Table)
 		}

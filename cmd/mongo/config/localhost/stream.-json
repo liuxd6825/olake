@@ -1,0 +1,38 @@
+{
+  "selected_streams": {
+    "master": [
+      {
+        "stream_name": "company"
+      },
+      {
+        "stream_name": "company_human"
+      }
+    ]
+  },
+  "streams": [
+    {
+      "stream": {
+        "name": "company",
+        "namespace": "master",
+        "type_schema": {},
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "company_human",
+        "namespace": "master",
+        "type_schema": {},
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "selected_streams": {
+    "master": [
+      {
+        "stream_name": "sys_outbox_event",
+        "normalization": false
+      }
+    ]
+  },
+  "streams": [
+    {
+      "stream": {
+        "name": "sys_outbox_event",
+        "namespace": "master",
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "type_schema": {},
+        "available_cursor_fields": [],
+        "sync_mode": "cdc",
+        "domain_event": {
+          "event_type": ["event_type"],
+          "data": "data",
+          "meta": "meta"
+        }
+      }
+    }
+  ]
+}

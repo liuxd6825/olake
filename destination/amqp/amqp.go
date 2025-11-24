@@ -5,14 +5,15 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math"
+	"sync"
+	"time"
+
 	"github.com/datazip-inc/olake/destination"
 	"github.com/datazip-inc/olake/types"
 	"github.com/datazip-inc/olake/utils/logger"
 	"github.com/datazip-inc/olake/utils/typeutils"
 	"github.com/rabbitmq/amqp091-go"
-	"math"
-	"sync"
-	"time"
 )
 
 type AmqpWriter struct {
@@ -217,7 +218,6 @@ func (m *AmqpWriter) Setup(stream types.StreamInterface, opts *destination.Optio
 }
 
 func (m *AmqpWriter) Write(ctx context.Context, record types.RawRecord) (err error) {
-	logger.Infof("amqp db:%s; table:%s; operationType:%s", record.DB, record.Table, record.OperationType)
 	var data []byte
 	var routingKey string
 
@@ -239,6 +239,9 @@ func (m *AmqpWriter) Write(ctx context.Context, record types.RawRecord) (err err
 			return err
 		}
 		routingKey = m.config.RoutingKey
+		if m.stream.GetStream().RouteKey != "" {
+			routingKey = m.stream.GetStream().RouteKey
+		}
 		if routingKey == "" {
 			routingKey = fmt.Sprintf("%s.%s", record.DB, record.Table)
 		}
@@ -247,7 +250,12 @@ func (m *AmqpWriter) Write(ctx context.Context, record types.RawRecord) (err err
 		ContentType: "text/plain",
 		Body:        data,
 	}
-	return m.channel.Publish(m.config.ExchangeName, routingKey, m.config.Mandatory, m.config.Immediate, msg)
+
+	err = m.channel.Publish(m.config.ExchangeName, routingKey, m.config.Mandatory, m.config.Immediate, msg)
+	if err == nil {
+		logger.Infof("amqp exchange:%s; routingKey:%s; db:%s; table:%s; operationType:%s", m.config.ExchangeName, routingKey, record.DB, record.Table, record.OperationType)
+	}
+	return err
 }
 
 func (m *AmqpWriter) Normalization() bool {

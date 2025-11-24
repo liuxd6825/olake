@@ -1,4 +1,4 @@
-package driver
+package internal
 
 import (
 	"context"
@@ -31,7 +31,7 @@ type Mongo struct {
 	state      *types.State // reference to globally present state
 }
 
-// config reference; must be pointer
+// GetConfigRef reference; must be pointer
 func (m *Mongo) GetConfigRef() abstract.Config {
 	m.config = &Config{}
 	return m.config

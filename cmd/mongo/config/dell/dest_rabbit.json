@@ -5,7 +5,6 @@
     "exchangeName": "master-cdc-graph",
     "exchangeType": "topic",
     "queueName": "master-cdc-graph",
-    "routingKey": "master-data-change",
     "normalization": false,
     "autoCreate": false,
     "durable": true,

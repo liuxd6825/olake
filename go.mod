@@ -1,8 +1,8 @@
 module github.com/datazip-inc/olake
 
-go 1.23.2
+go 1.24.9
 
-toolchain go1.23.7
+toolchain go1.24.9
 
 require (
 	github.com/IBM/sarama v1.45.2
