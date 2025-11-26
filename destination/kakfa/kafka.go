@@ -110,8 +110,8 @@ func (m *KafkaWriter) Write(ctx context.Context, record types.RawRecord) (err er
 		}
 	} else {
 		topic = m.config.Topic
-		if m.stream.GetStream().RouteKey != "" {
-			topic = m.stream.GetStream().RouteKey
+		if m.stream.GetStream().TopicKey != "" {
+			topic = m.stream.GetStream().TopicKey
 		}
 		if topic == "" {
 			topic = fmt.Sprintf("%s.%s", record.DB, record.Table)

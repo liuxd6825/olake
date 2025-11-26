@@ -2,11 +2,10 @@
   "type": "AMQP",
   "writer": {
     "url": "amqp://rabbitmq:123456@192.168.120.224:5672",
-    "exchangeName": "master-cdc-graph",
+    "exchangeName": "master-cdc",
     "exchangeType": "topic",
-    "queueName": "master-cdc-graph",
     "normalization": false,
-    "autoCreate": false,
+    "autoCreate": true,
     "durable": true,
     "noWait": true,
     "autoSetting": true

@@ -29,7 +29,7 @@ type Stream struct {
 	AdditionalPropertiesSchema schema.JSONSchema  `json:"additional_properties_schema,omitempty"`
 	SyncMode                   SyncMode           `json:"sync_mode,omitempty"`    // Mode being used for syncing data
 	DomainEvent                *DomainEventFields `json:"domain_event,omitempty"` // 增加领域事件 Domain event
-	RouteKey                   string             `json:"route_key,omitempty"`
+	TopicKey                   string             `json:"topic_key,omitempty"`
 }
 
 type DomainEventFields struct {

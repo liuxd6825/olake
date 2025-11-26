@@ -101,8 +101,13 @@ func (m *AmqpWriter) autoCreate() (err error) {
 	if err != nil {
 		return errors.New(fmt.Sprintf("无法声明 Exchange: %s", err))
 	}
+	return err
+}
+
+/*
+func (m *AmqpWriter) crateQueue(ch *amqp091.Channel) error {
 	hasQueue := true
-	_, err = ch.QueueDeclarePassive(m.config.QueueName, true, false, false, false, nil)
+	_, err := ch.QueueDeclarePassive(m.config.QueueName, true, false, false, false, nil)
 	if err != nil {
 		if amqpErr, ok := err.(*amqp091.Error); ok {
 			if amqpErr.Code == 404 { // 404 是 "NOT_FOUND" 错误码
@@ -143,16 +148,16 @@ func (m *AmqpWriter) autoCreate() (err error) {
 	// 5. 将 Queue 绑定到 Exchange
 	err = ch.QueueBind(
 		m.config.QueueName,    // 队列名称
-		m.config.RoutingKey,   // 路由键
+		m.config.TopicKey,     // 路由键
 		m.config.ExchangeName, // 交换机名称
 		m.config.NoWait,       // 是否等待确认
 		amqp091.Table{
 			//"x-message-ttl": int32(6000),
 		}, // 额外参数
 	)
-
-	return nil
+	return err
 }
+*/
 
 func (m *AmqpWriter) connect() error {
 	m.mutex.Lock()
@@ -219,7 +224,7 @@ func (m *AmqpWriter) Setup(stream types.StreamInterface, opts *destination.Optio
 
 func (m *AmqpWriter) Write(ctx context.Context, record types.RawRecord) (err error) {
 	var data []byte
-	var routingKey string
+	var topicKey string
 
 	if record.IsDomainEvent() && !record.IsSendEvent() {
 		return nil
@@ -232,18 +237,18 @@ func (m *AmqpWriter) Write(ctx context.Context, record types.RawRecord) (err err
 		if err != nil {
 			return err
 		}
-		routingKey = dEvent.EventType
+		topicKey = dEvent.EventType
 	} else {
 		data, err = json.Marshal(record)
 		if err != nil {
 			return err
 		}
-		routingKey = m.config.RoutingKey
-		if m.stream.GetStream().RouteKey != "" {
-			routingKey = m.stream.GetStream().RouteKey
+		topicKey = m.config.TopicKey
+		if m.stream.GetStream().TopicKey != "" {
+			topicKey = m.stream.GetStream().TopicKey
 		}
-		if routingKey == "" {
-			routingKey = fmt.Sprintf("%s.%s", record.DB, record.Table)
+		if topicKey == "" {
+			topicKey = fmt.Sprintf("%s.%s", record.DB, record.Table)
 		}
 	}
 	msg := amqp091.Publishing{
@@ -251,9 +256,9 @@ func (m *AmqpWriter) Write(ctx context.Context, record types.RawRecord) (err err
 		Body:        data,
 	}
 
-	err = m.channel.Publish(m.config.ExchangeName, routingKey, m.config.Mandatory, m.config.Immediate, msg)
+	err = m.channel.Publish(m.config.ExchangeName, topicKey, m.config.Mandatory, m.config.Immediate, msg)
 	if err == nil {
-		logger.Infof("amqp exchange:%s; routingKey:%s; db:%s; table:%s; operationType:%s", m.config.ExchangeName, routingKey, record.DB, record.Table, record.OperationType)
+		logger.Infof("amqp exchange:%s; topicKey:%s; db:%s; table:%s; operationType:%s", m.config.ExchangeName, topicKey, record.DB, record.Table, record.OperationType)
 	}
 	return err
 }
