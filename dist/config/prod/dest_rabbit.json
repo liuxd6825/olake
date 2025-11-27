@@ -2,7 +2,7 @@
   "type": "AMQP",
   "writer": {
     "url": "amqp://rabbitmq:123456@192.168.120.224:5672",
-    "exchangeName": "dev-master-cdc",
+    "exchangeName": "prod-master-cdc",
     "exchangeType": "topic",
     "normalization": false,
     "autoCreate": true,
