@@ -248,8 +248,12 @@ func (m *AmqpWriter) Write(ctx context.Context, record types.RawRecord) (err err
 			topicKey = m.stream.GetStream().TopicKey
 		}
 		if topicKey == "" {
-			topicKey = fmt.Sprintf("%s.%s", record.DB, record.Table)
+			topicKey = "data-change"
 		}
+
+		/*		if topicKey == "" {
+				topicKey = fmt.Sprintf("%s.%s", record.DB, record.Table)
+			}*/
 	}
 	msg := amqp091.Publishing{
 		ContentType: "text/plain",
@@ -258,7 +262,7 @@ func (m *AmqpWriter) Write(ctx context.Context, record types.RawRecord) (err err
 
 	err = m.channel.Publish(m.config.ExchangeName, topicKey, m.config.Mandatory, m.config.Immediate, msg)
 	if err == nil {
-		logger.Infof("amqp exchange:%s; topicKey:%s; db:%s; table:%s; operationType:%s", m.config.ExchangeName, topicKey, record.DB, record.Table, record.OperationType)
+		logger.Infof("amqp exchange:%s; topic:%s; db:%s; table:%s; operationType:%s", m.config.ExchangeName, topicKey, record.DB, record.Table, record.OperationType)
 	}
 	return err
 }
