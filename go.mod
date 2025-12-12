@@ -2,8 +2,6 @@ module github.com/datazip-inc/olake
 
 go 1.24.9
 
-toolchain go1.24.9
-
 require (
 	github.com/IBM/sarama v1.45.2
 	github.com/apache/spark-connect-go/v35 v35.0.0-20250317154112-ffd832059443
@@ -23,7 +21,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	github.com/xitongsys/parquet-go v1.6.2
 	github.com/xitongsys/parquet-go-source v0.0.0-20241021075129-b732d2ac9c9b
-	go.mongodb.org/mongo-driver v1.17.3
+	go.mongodb.org/mongo-driver v1.17.6
 	golang.org/x/tools v0.30.0
 	google.golang.org/grpc v1.71.0
 	google.golang.org/protobuf v1.36.5
