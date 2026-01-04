@@ -3,6 +3,7 @@ olake
 state.json
 stats.json
 *.log
+*/**/logs
 test/config
 .DS_Store
 __debug_bin*
