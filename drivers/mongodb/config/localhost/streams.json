@@ -4,10 +4,116 @@
       {
         "stream_name": "sys_outbox_event",
         "normalization": false
+      },
+
+      {
+        "partition_regex": "",
+        "stream_name": "human",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_company",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_credential",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_human",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_account",
+        "normalization": false
       }
     ]
   },
   "streams": [
+    {
+      "stream": {
+        "name": "human",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_company",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_credential",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_human",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_account",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          "full_refresh",
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
     {
       "stream": {
         "name": "sys_outbox_event",
@@ -24,8 +130,7 @@
         "sync_mode": "cdc",
         "domain_event": {
           "event_type": ["event_type"],
-          "data": "data",
-          "meta": "meta"
+          "data": "data"
         }
       }
     }
