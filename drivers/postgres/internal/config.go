@@ -26,6 +26,10 @@ type Config struct {
 	RetryCount       int               `json:"retry_count"`
 }
 
+func (c *Config) GetDefaultMode() types.SyncMode {
+	return c.DefaultSyncMode
+}
+
 // Capture Write Ahead Logs
 type CDC struct {
 	ReplicationSlot string `json:"replication_slot"`

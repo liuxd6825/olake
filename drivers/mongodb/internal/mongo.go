@@ -33,7 +33,9 @@ type Mongo struct {
 
 // GetConfigRef reference; must be pointer
 func (m *Mongo) GetConfigRef() abstract.Config {
-	m.config = &Config{}
+	if m.config == nil {
+		m.config = &Config{}
+	}
 	return m.config
 }
 

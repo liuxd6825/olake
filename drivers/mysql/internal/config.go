@@ -2,8 +2,9 @@ package driver
 
 import (
 	"fmt"
-	"github.com/go-sql-driver/mysql"
 	"strings"
+
+	"github.com/go-sql-driver/mysql"
 
 	"github.com/datazip-inc/olake/constants"
 	"github.com/datazip-inc/olake/types"
@@ -23,6 +24,11 @@ type Config struct {
 	MaxThreads    int            `json:"max_threads"`
 	RetryCount    int            `json:"backoff_retry_count"`
 }
+
+func (c *Config) GetDefaultMode() types.SyncMode {
+	return c.DefaultMode
+}
+
 type CDC struct {
 	InitialWaitTime int `json:"intial_wait_time"`
 }

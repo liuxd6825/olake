@@ -42,7 +42,6 @@ func (m *MySQL) CDCSupported() bool {
 
 // GetConfigRef returns a reference to the configuration
 func (m *MySQL) GetConfigRef() abstract.Config {
-	m.config = &Config{}
 	return m.config
 }
 

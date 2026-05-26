@@ -43,7 +43,6 @@ type Parquet struct {
 
 // GetConfigRef returns the config reference for the parquet writer.
 func (p *Parquet) GetConfigRef() destination.Config {
-	p.config = &Config{}
 	return p.config
 }
 
@@ -131,6 +130,10 @@ func (p *Parquet) Setup(stream types.StreamInterface, options *destination.Optio
 
 // Write writes a record to the Parquet file.
 func (p *Parquet) Write(_ context.Context, record types.RawRecord) error {
+	if record.OperationType == "r" {
+		return nil
+	}
+
 	partitionedPath := p.getPartitionedFilePath(record.After, record.OlakeTimestamp)
 
 	partitionFolder, exists := p.partitionedFiles[partitionedPath]

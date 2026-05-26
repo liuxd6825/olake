@@ -114,8 +114,6 @@ func (p *Postgres) SetupState(state *types.State) {
 }
 
 func (p *Postgres) GetConfigRef() abstract.Config {
-	p.config = &Config{}
-
 	return p.config
 }
 

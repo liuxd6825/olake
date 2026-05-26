@@ -38,16 +38,8 @@
       "stream": {
         "name": "human",
         "namespace": "master",
-        "type_schema": {},
-        "supported_sync_modes": [
-          "full_refresh",
-          "cdc"
-        ],
-        "source_defined_primary_key": [
-          "_id"
-        ],
-        "available_cursor_fields": [],
-        "sync_mode": "cdc"
+        "supported_sync_modes": ["full_refresh","cdc"],
+        "source_defined_primary_key": ["_id"]
       }
     },
     {
@@ -55,13 +47,8 @@
         "name": "human_company",
         "namespace": "master",
         "type_schema": {},
-        "supported_sync_modes": [
-          "full_refresh",
-          "cdc"
-        ],
-        "source_defined_primary_key": [
-          "_id"
-        ],
+        "supported_sync_modes": ["full_refresh","cdc"],
+        "source_defined_primary_key": ["_id"],
         "available_cursor_fields": [],
         "sync_mode": "cdc"
       }
@@ -71,13 +58,8 @@
         "name": "human_credential",
         "namespace": "master",
         "type_schema": {},
-        "supported_sync_modes": [
-          "full_refresh",
-          "cdc"
-        ],
-        "source_defined_primary_key": [
-          "_id"
-        ],
+        "supported_sync_modes": ["full_refresh","cdc"],
+        "source_defined_primary_key": ["_id"],
         "available_cursor_fields": [],
         "sync_mode": "cdc"
       }

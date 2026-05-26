@@ -226,6 +226,10 @@ func (m *AmqpWriter) Write(ctx context.Context, record types.RawRecord) (err err
 	var data []byte
 	var topicKey string
 
+	if record.OperationType == "r" {
+		return nil
+	}
+
 	if record.IsDomainEvent() && !record.IsSendEvent() {
 		return nil
 	}

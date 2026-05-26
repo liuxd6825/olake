@@ -61,6 +61,9 @@ func (i *Iceberg) Setup(stream types.StreamInterface, options *destination.Optio
 }
 
 func (i *Iceberg) Write(_ context.Context, record types.RawRecord) error {
+	if record.OperationType == "r" {
+		return nil
+	}
 	// Convert record to Debezium format
 	debeziumRecord, err := record.ToDebeziumFormat(i.config.IcebergDatabase, i.stream.Name(), i.stream.NormalizationEnabled())
 

@@ -26,6 +26,10 @@ type Config struct {
 	AutoSetting      bool           `json:"auto_setting"`
 }
 
+func (c *Config) GetDefaultMode() types.SyncMode {
+	return c.DefaultMode
+}
+
 func (c *Config) URI() string {
 	connectionPrefix := "mongodb"
 	options := fmt.Sprintf("?authSource=%s", c.AuthDB)

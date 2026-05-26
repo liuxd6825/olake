@@ -94,6 +94,7 @@ var syncCmd = &cobra.Command{
 			stateStreamMap[fmt.Sprintf("%s.%s", stream.Namespace, stream.Stream)] = stream
 		}
 		_, _ = utils.ArrayContains(catalog.Streams, func(elem *types.ConfiguredStream) bool {
+
 			sMetadata, selected := selectedStreamsMap[fmt.Sprintf("%s.%s", elem.Namespace(), elem.Name())]
 			// Check if the stream is in the selectedStreamMap
 			if !(catalog.SelectedStreams == nil || selected) {
@@ -106,7 +107,10 @@ var syncCmd = &cobra.Command{
 				logger.Errorf("Skipping; Configured Stream %s not found in source", elem.ID())
 				return false
 			}
-
+			
+			if elem.Stream.SyncMode == "" {
+				elem.Stream.SyncMode = connector.GetConfigRef().GetDefaultMode()
+			}
 			err := elem.Validate(source)
 			if err != nil {
 				logger.Errorf("Skipping; Configured Stream %s found invalid due to reason: %s", elem.ID(), err)

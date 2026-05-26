@@ -17,5 +17,6 @@
   "default_mode": "cdc",
   "backoff_retry_count": 4,
   "chunking_strategy": "",
-  "auto_setting": true
+  "auto_setting": true,
+  "start_from_now": true
 }

@@ -12,6 +12,7 @@ type CDCMsgFn func(message CDCChange) error
 
 type Config interface {
 	Validate() error
+	GetDefaultMode() types.SyncMode
 }
 
 type DriverInterface interface {
