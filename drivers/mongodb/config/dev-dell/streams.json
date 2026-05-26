@@ -5,7 +5,10 @@
         "stream_name": "sys_outbox_event",
         "normalization": false
       },
-
+      {
+        "stream_name": "master_record",
+        "normalization": false
+      },
       {
         "partition_regex": "",
         "stream_name": "human",
@@ -30,17 +33,143 @@
         "partition_regex": "",
         "stream_name": "human_account",
         "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_product",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_contract",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "company",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "company_human",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "company_company",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "company_account",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_product",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "human_contract",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "product",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "product_human",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "product_company",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "product_product",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "product_contract",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "contract",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "contract_human",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "contract_company",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "contract_product",
+        "normalization": false
+      },
+      {
+        "partition_regex": "",
+        "stream_name": "contract_contract",
+        "normalization": false
       }
     ]
   },
   "streams": [
     {
       "stream": {
+        "name": "sys_outbox_event",
+        "namespace": "master",
+        "supported_sync_modes": [
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "type_schema": {},
+        "available_cursor_fields": [],
+        "sync_mode": "cdc",
+        "domain_event": {
+          "event_type": [
+            "event_type"
+          ],
+          "data": "data"
+        }
+      }
+    },
+    {
+      "stream": {
+        "name": "master_record",
+        "namespace": "master",
+        "supported_sync_modes": [
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "type_schema": {},
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
         "name": "human",
         "namespace": "master",
         "type_schema": {},
         "supported_sync_modes": [
-          "full_refresh",
+          
           "cdc"
         ],
         "source_defined_primary_key": [
@@ -56,7 +185,7 @@
         "namespace": "master",
         "type_schema": {},
         "supported_sync_modes": [
-          "full_refresh",
+          
           "cdc"
         ],
         "source_defined_primary_key": [
@@ -72,7 +201,7 @@
         "namespace": "master",
         "type_schema": {},
         "supported_sync_modes": [
-          "full_refresh",
+          
           "cdc"
         ],
         "source_defined_primary_key": [
@@ -88,7 +217,7 @@
         "namespace": "master",
         "type_schema": {},
         "supported_sync_modes": [
-          "full_refresh",
+          
           "cdc"
         ],
         "source_defined_primary_key": [
@@ -104,7 +233,7 @@
         "namespace": "master",
         "type_schema": {},
         "supported_sync_modes": [
-          "full_refresh",
+          
           "cdc"
         ],
         "source_defined_primary_key": [
@@ -116,22 +245,290 @@
     },
     {
       "stream": {
-        "name": "sys_outbox_event",
+        "name": "human_product",
         "namespace": "master",
+        "type_schema": {},
         "supported_sync_modes": [
-          "full_refresh",
+          
           "cdc"
         ],
         "source_defined_primary_key": [
           "_id"
         ],
-        "type_schema": {},
         "available_cursor_fields": [],
-        "sync_mode": "cdc",
-        "domain_event": {
-          "event_type": ["event_type"],
-          "data": "data"
-        }
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "human_contract",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "company",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "company_company",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "company_human",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "company_account",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "company_product",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "company_contract",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "product",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "product_company",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "product_human",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "product_product",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "product_contract",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "contract",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "contract_company",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "contract_human",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "contract_product",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
+      }
+    },
+    {
+      "stream": {
+        "name": "contract_contract",
+        "namespace": "master",
+        "type_schema": {},
+        "supported_sync_modes": [
+          
+          "cdc"
+        ],
+        "source_defined_primary_key": [
+          "_id"
+        ],
+        "available_cursor_fields": [],
+        "sync_mode": "cdc"
       }
     }
   ]
